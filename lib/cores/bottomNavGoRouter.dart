@@ -25,20 +25,20 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
     MyCustomBottomNavBarItem(
       icon: Icon(Icons.explore_outlined),
       activeIcon: Icon(Icons.explore),
-      label: 'DISCOVER',
-      initialLocation: '/discover',
-    ),
-    MyCustomBottomNavBarItem(
-      icon: Icon(Icons.storefront_outlined),
-      activeIcon: Icon(Icons.storefront),
-      label: 'SHOP',
-      initialLocation: '/shop',
+      label: 'Likes',
+      initialLocation: '/likes',
     ),
     MyCustomBottomNavBarItem(
       icon: Icon(Icons.account_circle_outlined),
       activeIcon: Icon(Icons.account_circle),
-      label: 'MY',
-      initialLocation: '/login',
+      label: 'Search',
+      initialLocation: '/search',
+    ),
+    MyCustomBottomNavBarItem(
+      icon: Icon(Icons.storefront_outlined),
+      activeIcon: Icon(Icons.storefront),
+      label: 'Profile',
+      initialLocation: '/profile',
     ),
   ];
 
@@ -60,11 +60,11 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
         },
         currentIndex: widget.location == '/'
             ? 0
-            : widget.location == '/discover'
+            : widget.location == '/likes'
                 ? 1
-                : widget.location == '/shop'
-                    ? 2
-                    : 3,
+                : widget.location == '/profile'
+                    ? 3
+                    : 2,
         items: tabs,
       ),
     );
@@ -78,8 +78,8 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
     setState(() {
       _currentIndex = index;
     });
-    if (index == 3) {
-      context.push('/login');
+    if (index == 2) {
+      context.push('/search');
     } else {
       router.go(location);
     }
