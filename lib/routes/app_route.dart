@@ -1,41 +1,75 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../views/Error_Page.dart';
-import '../views/Favorite_Page.dart';
-import '../views/Home_Page.dart';
-import '../views/Profile_Page.dart';
-import '../views/Promotion_page.dart';
+import '../cores/bottomNavGoRouter.dart';
 
-final GoRouter router = GoRouter(
-  errorBuilder: (BuildContext context, state) => const ErrorPage(),
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
+
+final router = GoRouter(
+  initialLocation: '/',
+  navigatorKey: _rootNavigatorKey,
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) => const HomePage(),
-      routes: <GoRoute>[
+    ShellRoute(
+      navigatorKey: _shellNavigatorKey,
+      pageBuilder: (context, state, child) {
+        print(state.location);
+        return NoTransitionPage(
+            child: ScaffoldWithNavBar(
+          location: state.location,
+          child: child,
+        ));
+      },
+      routes: [
         GoRoute(
-          path: 'promotion',
-          builder: (BuildContext context, GoRouterState state) =>
-              const PromotionPage(),
+          path: '/',
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: Scaffold(
+                body: Center(child: Text("Home")),
+              ),
+            );
+          },
         ),
         GoRoute(
-          path: 'favorite',
-          builder: (BuildContext context, GoRouterState state) =>
-              const FavoritePage(),
+          path: '/discover',
+          parentNavigatorKey: _shellNavigatorKey,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(
+              child: Scaffold(
+                body: Center(child: Text("Discover")),
+              ),
+            );
+          },
         ),
+        GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
+            path: '/shop',
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(
+                child: Scaffold(
+                  body: Center(child: Text("Shop")),
+                ),
+              );
+            }),
       ],
     ),
     GoRoute(
-        path: '/profile',
-        builder: (BuildContext context, GoRouterState state) =>
-            const ProfilePage(),
-        routes: <GoRoute>[
-          // GoRoute(
-          //   path: 'settings',
-          //   builder: (BuildContext context, GoRouterState state) =>
-          //       const ProfilePage(),
-          // ),
-        ])
+      parentNavigatorKey: _rootNavigatorKey,
+      path: '/login',
+      pageBuilder: (context, state) {
+        return NoTransitionPage(
+          key: UniqueKey(),
+          child: Scaffold(
+            appBar: AppBar(),
+            body: const Center(
+              child: Text("Login"),
+            ),
+          ),
+        );
+      },
+    ),
   ],
 );

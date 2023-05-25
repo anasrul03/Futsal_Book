@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:futsal_book_app/cores/bottomNavGoRouter.dart';
+import 'package:futsal_book_app/views/Favorite_Page.dart';
+import 'package:futsal_book_app/views/Profile_Page.dart';
+import 'package:futsal_book_app/views/Promotion_page.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final router = GoRouter.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Home Page")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(router.location.toString()),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/favorite');
-              },
-              child: const Text("Next Page"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/profile');
-              },
-              child: const Text("Profile Page"),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: const Text('Billion Dollar App')),
+      body: ScaffoldWithNavBar(child: Text("data"), location: '/'),
     );
+  }
+
+  Widget _buildBody() {
+    switch (currentIndex) {
+      case 0:
+        return const Center(child: Text('Home'));
+      case 1:
+        return const Center(child: Text('Search'));
+      case 2:
+        return const Center(child: Text('Account'));
+      default:
+        return const Center(child: Text('Default'));
+    }
   }
 }

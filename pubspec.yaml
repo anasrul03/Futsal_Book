@@ -39,6 +39,7 @@ dependencies:
   flutterfire_cli: ^0.2.7
   firebase_core: ^2.13.0
   go_router: ^7.1.1
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:
